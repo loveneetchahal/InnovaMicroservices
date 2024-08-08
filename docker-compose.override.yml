@@ -2,11 +2,14 @@ version: '3.4'
 
 services:
   order.api:
+    user: root
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
     ports:
       - "5000:8080"
+    volumes:
+     - order-pictures:/app/wwwroot/pictures  
   stock.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production

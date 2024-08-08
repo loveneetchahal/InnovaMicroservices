@@ -20,3 +20,5 @@ services:
     build:
       context: .
       dockerfile: Payment.API/Dockerfile
+volumes:
+  order-pictures:
