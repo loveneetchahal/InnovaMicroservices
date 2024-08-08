@@ -17,6 +17,7 @@ builder.Services.AddMassTransit(x =>
 
     x.UsingRabbitMq((context, configure) =>
     {
+        configure.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
         configure.Host(new Uri(builder.Configuration.GetConnectionString("RabbitMQ")!));
 
 

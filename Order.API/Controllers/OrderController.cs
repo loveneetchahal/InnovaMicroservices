@@ -15,7 +15,10 @@ namespace Order.API.Controllers
         public IActionResult Create3()
         {
             var orderCreatedEvent = new OrderCreatedEvent(1, 500, 10);
-            publishEndpoint.Publish(orderCreatedEvent);
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(50));
+            publishEndpoint.Publish(orderCreatedEvent, cancellationTokenSource.Token);
 
             return Ok();
         }
