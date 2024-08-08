@@ -1,4 +1,8 @@
-﻿namespace Order.API.Services
+﻿using Polly;
+using Polly.CircuitBreaker;
+using Polly.Retry;
+
+namespace Order.API.Services
 {
     public class StockService(HttpClient client)
     {
@@ -13,6 +17,25 @@
                 await client.GetFromJsonAsync<StockCheckResponseDto>($"/api/Stock/StockCheck/{productId}");
 
             return stockCheckResponse!.StockStatus;
+        }
+
+
+        public async Task ManuelPollyRetry()
+        {
+            var httpClient = new HttpClient();
+
+
+            ResiliencePipeline pipeline = new ResiliencePipelineBuilder().AddRetry(new RetryStrategyOptions()
+            {
+                MaxRetryAttempts = 3,
+                Delay = TimeSpan.FromSeconds(3)
+            }).AddCircuitBreaker(new CircuitBreakerStrategyOptions()).AddTimeout(TimeSpan.FromSeconds(10)).Build();
+
+
+            await pipeline.ExecuteAsync(async ct =>
+            {
+                var response = await httpClient.GetAsync("https://www.google.com", ct);
+            });
         }
     }
 }

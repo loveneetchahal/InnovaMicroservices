@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<StockService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("MicroservicesAddress")["StockBaseUrl"]!);
-}).AddPolicyHandler(RetryPolicy()).AddPolicyHandler(AdvancedCircuitPolicy());
+}).AddPolicyHandler(timeoutPolicy(3)).AddPolicyHandler(RetryPolicy()).AddPolicyHandler(AdvancedCircuitPolicy());
 
 static IAsyncPolicy<HttpResponseMessage> RetryPolicy()
 {
@@ -36,6 +36,7 @@ static IAsyncPolicy<HttpResponseMessage> AdvancedCircuitPolicy()
         .AdvancedCircuitBreakerAsync(0.5, TimeSpan.FromSeconds(20), 2, TimeSpan.FromSeconds(30));
 }
 
+
 builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, configure) =>
@@ -50,14 +51,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+return;
+
+static IAsyncPolicy<HttpResponseMessage> timeoutPolicy(int seconds)
+{
+    return Policy.TimeoutAsync<HttpResponseMessage>(seconds);
+}

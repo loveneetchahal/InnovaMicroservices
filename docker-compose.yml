@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  order.api:
+    image: innova-orderapi
+    container_name: innova-orderapi-container
+    build:
+      context: .
+      dockerfile: Order.API/Dockerfile 
+
+  stock.api:
+    image: innova-stockapi
+    container_name: innova-stockapi-container
+    build:
+      context: .
+      dockerfile: Stock.API/Dockerfile
+  payment.api:
+    image: innova-paymentapi
+    container_name: innova-paymentapi-container
+    build:
+      context: .
+      dockerfile: Payment.API/Dockerfile

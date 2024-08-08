@@ -3,18 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.API", "Order.API\Order.API.csproj", "{3B882000-F20F-4B9D-938C-721A819EEA8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.API", "Order.API\Order.API.csproj", "{3B882000-F20F-4B9D-938C-721A819EEA8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock.API", "Stock.API\Stock.API.csproj", "{E7BB5E1C-84AE-44E4-B0A6-14F2DB7A78F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stock.API", "Stock.API\Stock.API.csproj", "{E7BB5E1C-84AE-44E4-B0A6-14F2DB7A78F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.API", "Payment.API\Payment.API.csproj", "{25AC5202-6873-428B-A140-70024AA8042D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.API", "Payment.API\Payment.API.csproj", "{25AC5202-6873-428B-A140-70024AA8042D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0501D5B9-19C3-47D5-A0BF-9C272CBEB340}"
 	ProjectSection(SolutionItems) = preProject
 		Port.md = Port.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBus", "ServiceBus\ServiceBus.csproj", "{D8FD3C23-21E7-483B-A7C0-F82AF061C9D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceBus", "ServiceBus\ServiceBus.csproj", "{D8FD3C23-21E7-483B-A7C0-F82AF061C9D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockerExample.App", "DockerExample.App\DockerExample.App.csproj", "{82C283BE-F774-49B0-99F6-EAECCAD2220B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{392A0C8B-6664-4C29-AE38-5AD70175EF2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +42,14 @@ Global
 		{D8FD3C23-21E7-483B-A7C0-F82AF061C9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FD3C23-21E7-483B-A7C0-F82AF061C9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FD3C23-21E7-483B-A7C0-F82AF061C9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82C283BE-F774-49B0-99F6-EAECCAD2220B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82C283BE-F774-49B0-99F6-EAECCAD2220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82C283BE-F774-49B0-99F6-EAECCAD2220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82C283BE-F774-49B0-99F6-EAECCAD2220B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{392A0C8B-6664-4C29-AE38-5AD70175EF2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{392A0C8B-6664-4C29-AE38-5AD70175EF2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{392A0C8B-6664-4C29-AE38-5AD70175EF2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{392A0C8B-6664-4C29-AE38-5AD70175EF2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
