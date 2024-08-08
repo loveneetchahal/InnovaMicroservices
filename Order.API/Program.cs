@@ -1,6 +1,8 @@
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Order.API.Services;
+using Polly;
+using Polly.Extensions.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,24 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<StockService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("MicroservicesAddress")["StockBaseUrl"]!);
-});
+}).AddPolicyHandler(RetryPolicy()).AddPolicyHandler(AdvancedCircuitPolicy());
+
+static IAsyncPolicy<HttpResponseMessage> RetryPolicy()
+{
+    return HttpPolicyExtensions.HandleTransientHttpError().WaitAndRetryAsync(10,
+        (_) => TimeSpan.FromSeconds(5));
+}
+
+static IAsyncPolicy<HttpResponseMessage> CircuitPolicy()
+{
+    return HttpPolicyExtensions.HandleTransientHttpError().CircuitBreakerAsync(2, TimeSpan.FromSeconds(30));
+}
+
+static IAsyncPolicy<HttpResponseMessage> AdvancedCircuitPolicy()
+{
+    return HttpPolicyExtensions.HandleTransientHttpError()
+        .AdvancedCircuitBreakerAsync(0.5, TimeSpan.FromSeconds(20), 2, TimeSpan.FromSeconds(30));
+}
 
 builder.Services.AddMassTransit(x =>
 {
