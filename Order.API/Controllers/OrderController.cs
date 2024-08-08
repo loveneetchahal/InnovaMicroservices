@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Order.API.Services;
 using RabbitMQ.Client;
 using ServiceBus;
 
@@ -9,10 +10,20 @@ namespace Order.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class OrderController(ServiceBus.IBus bus, IPublishEndpoint publishEndpoint) : ControllerBase
+    public class OrderController(ServiceBus.IBus bus, IPublishEndpoint publishEndpoint, StockService stockService)
+        : ControllerBase
     {
         [HttpGet]
-        public IActionResult Create3()
+        public async Task<IActionResult> Create4FromSyncCommunication()
+        {
+            var stockCheck = await stockService.StockCheck(10);
+
+            return Ok(new { hasStock = stockCheck });
+        }
+
+
+        [HttpGet]
+        public IActionResult Create3FromAsyncCommunication()
         {
             var orderCreatedEvent = new OrderCreatedEvent(1, 500, 10);
 
@@ -25,7 +36,7 @@ namespace Order.API.Controllers
 
 
         [HttpGet]
-        public IActionResult Create2()
+        public IActionResult Create2FromAsyncCommunication()
         {
             var orderCreatedEvent = new OrderCreatedEvent(1, 500, 10);
 
@@ -39,7 +50,7 @@ namespace Order.API.Controllers
 
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateFromAsyncCommunication()
         {
             // db operations (create)
 
