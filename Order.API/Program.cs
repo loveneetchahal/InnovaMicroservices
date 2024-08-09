@@ -1,5 +1,7 @@
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Order.API.Models;
 using Order.API.Services;
 using Polly;
 using Polly.Extensions.Http;
@@ -13,7 +15,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+});
 builder.Services.AddHttpClient<StockService>(x =>
 {
     x.BaseAddress = new Uri(builder.Configuration.GetSection("MicroservicesAddress")["StockBaseUrl"]!);

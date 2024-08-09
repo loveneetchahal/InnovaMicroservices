@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Order.API.Models;
 using Order.API.Services;
 using RabbitMQ.Client;
 using ServiceBus;
@@ -10,9 +11,20 @@ namespace Order.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class OrderController(ServiceBus.IBus bus, IPublishEndpoint publishEndpoint, StockService stockService)
+    public class OrderController(
+        ServiceBus.IBus bus,
+        IPublishEndpoint publishEndpoint,
+        StockService stockService,
+        AppDbContext context)
         : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetProductList()
+        {
+            return Ok(context.Products.ToList());
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Create4FromSyncCommunication()
         {

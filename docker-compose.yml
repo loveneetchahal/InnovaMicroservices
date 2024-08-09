@@ -20,5 +20,10 @@ services:
     build:
       context: .
       dockerfile: Payment.API/Dockerfile
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: innova-sqlserver-container
 volumes:
   order-pictures:
+  sqlserver-data:
